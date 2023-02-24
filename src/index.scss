@@ -1,0 +1,32 @@
+@import url("./vendor/normalize.scss");
+@import url("./vendor/fonts/fonts.scss");
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h3,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+label {
+  cursor: pointer;
+}
+
+li {
+  list-style-type: none;
+}

@@ -1,0 +1,33 @@
+$base-button-color: #2196f3;
+
+.root__page {
+  padding: 50px 103px;
+}
+
+.page {
+  font-family: "Open sans";
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  background-color: #f3f7fa;
+  max-width: 1350px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+@media (max-width: 1050px) {
+  .page {
+    gap: 30px;
+  }
+
+  .root__page {
+    padding: 30px 30px;
+  }
+}
+
+@media (max-width: 570px) {
+  .root__page {
+    padding: 30px 10px;
+  }
+}

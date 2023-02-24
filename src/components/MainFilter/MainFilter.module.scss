@@ -1,0 +1,76 @@
+@import '../App/App.module.scss';
+
+.main-filter {
+  &__input-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+
+  &__pseudo-item {
+    border: 1px solid #dfe5ec;
+    display: block;
+    padding: 15px 25px;
+    background-color: #ffffff;
+    width: calc(500px / 3);
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 11px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  &__item:checked + &__pseudo-item {
+    background-color: $base-button-color;
+    color: #ffffff;
+    border: 1px solid $base-button-color;
+  }
+
+  & label:first-child &__pseudo-item {
+    border-radius: 2px 0 0 2px;
+  }
+
+  & label:last-child &__pseudo-item {
+    border-radius: 0 2px 2px 0;
+  }
+}
+
+@media (max-width: 1050px) {
+  .main-filter {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 570px) {
+  .main-filter {
+    margin: 0 auto;
+    width: calc(500px / 3 * 2);
+
+    &__pseudo-item {
+      padding: 7px 24px;
+      text-align: center;
+    }
+
+    &__input-container {
+      display: flex;
+      box-sizing: border-box;
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .main-filter {
+    margin: 0 auto;
+    width: calc(500px / 3);
+  }
+}

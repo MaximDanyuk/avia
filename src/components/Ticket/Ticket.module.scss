@@ -1,0 +1,99 @@
+.tickets-list__item {
+  padding: 20px 50px 20px 20px;
+}
+
+.ticket {
+  width: 502px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &__info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  &__content-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 141px);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  &__item-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  &__text {
+    font-weight: 600;
+  }
+
+  &__text_light {
+    font-size: 12px;
+    line-height: 18px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #a0b0b9;
+  }
+
+  &__text_dark {
+    font-size: 14px;
+    line-height: 21px;
+    color: #4a4a4a;
+  }
+
+  &__price {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 24px;
+    color: #2196f3;
+  }
+
+  &__logo {
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 570px) {
+  .tickets-list__item {
+    padding: 20px;
+    margin: 0 auto;
+  }
+
+  .ticket {
+    width: 350px;
+
+    &__content-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 107px);
+    }
+  }
+}
+
+@media (max-width: 400px) {
+  .ticket {
+    width: 300px;
+
+    &__content-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 90px);
+    }
+
+    &__text_light {
+      font-size: 10px;
+    }
+
+    &__text_dark {
+      font-size: 12px;
+      line-height: 21px;
+    }
+  }
+}
