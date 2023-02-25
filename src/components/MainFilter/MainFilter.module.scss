@@ -17,15 +17,14 @@
   &__pseudo-item {
     border: 1px solid #dfe5ec;
     display: block;
-    padding: 15px 25px;
+    padding: 15px 65px;
     background-color: #ffffff;
-    width: calc(500px / 3);
+    width: calc(500px / 2);
     box-sizing: border-box;
     font-weight: 600;
     font-size: 11px;
     line-height: 20px;
     display: flex;
-    align-items: center;
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
@@ -53,11 +52,10 @@
 
 @media (max-width: 570px) {
   .main-filter {
-    margin: 0 auto;
-    width: calc(500px / 3 * 2);
+    width: calc(500px / 2);
 
     &__pseudo-item {
-      padding: 7px 24px;
+      padding: 7px 65px;
       text-align: center;
     }
 
@@ -65,12 +63,5 @@
       display: flex;
       box-sizing: border-box;
     }
-  }
-}
-
-@media (max-width: 400px) {
-  .main-filter {
-    margin: 0 auto;
-    width: calc(500px / 3);
   }
 }

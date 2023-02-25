@@ -40,18 +40,6 @@ const MainFilter: React.FC = () => {
             Самый быстрый
           </span>
         </label>
-        <label className={styles['main-filter__label']}>
-          <input
-            className={styles['main-filter__item']}
-            type="radio"
-            name="flyParams"
-            value="Оптимальный"
-            onClick={handleFixSorting}
-          />
-          <span className={styles['main-filter__pseudo-item']}>
-            Оптимальный
-          </span>
-        </label>
       </fieldset>
     </form>
   );

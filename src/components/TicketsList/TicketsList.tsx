@@ -1,6 +1,6 @@
 /*eslint-disable */
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useAction } from '../../hooks/useAction';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Ticket from '../Ticket/Ticket';
@@ -14,81 +14,82 @@ const TicketsList: React.FC = () => {
   const { isLoad } = useTypedSelector((state) => state.isLoad);
   const { totalPage } = useTypedSelector((state) => state.totalPage);
   const { quantity } = useTypedSelector((state) => state.sideFilter);
-  const [filtered, setFiltered] = useState<ITicket[]>([]);
-  /*   const quality = useTypedSelector((state) => state.mainFilter); */
+  const quality = useTypedSelector((state) => state.mainFilter);
   const { showMoreTickets } = useAction();
   const { getInitialTickets } = useAction();
+
+  const codificationStops = (el: any) => {
+    switch (el) {
+      case 'Без пересадок':
+        return 0;
+      case '1 пересадка':
+        return 1;
+      case '2 пересадки':
+        return 2;
+      case '3 пересадки':
+        return 3;
+      default:
+        return 0;
+    }
+  };
+
+  type checkWhatFilteredType = (string | number | boolean)[];
+  const checkWhatFiltered = (
+    stopsQualityArray: checkWhatFilteredType,
+  ) => {
+    return stopsQualityArray.map((el) => codificationStops(el));
+  };
+  const getFilteredTickets = (
+    tickets: ITicket[],
+    stopsQualityArray: number[],
+    sortParam: string,
+  ): ITicket[] => {
+    const filteredTickets: any[] = [];
+
+    stopsQualityArray.forEach((code) => {
+      tickets.forEach((ticket) => {
+        if (code === ticket.segments[0].stops.length) {
+          filteredTickets.push(ticket);
+        }
+      });
+    });
+
+    if (sortParam === 'Самый дешевый') {
+      filteredTickets.sort((a, b) => a.price - b.price);
+    }
+    if (sortParam === 'Самый быстрый') {
+      filteredTickets.sort(
+        (a, b) =>
+          a.segments[0].duration +
+          a.segments[1].duration -
+          (b.segments[0].duration + b.segments[1].duration),
+      );
+    }
+    console.log(filteredTickets);
+    return filteredTickets;
+  };
 
   useEffect(() => {
     getInitialTickets();
   }, []);
 
+  const filteredDataArray: ITicket[] = useMemo((): ITicket[] => {
+    return getFilteredTickets(
+      tickets,
+      checkWhatFiltered(quantity),
+      quality.quality,
+    );
+  }, [tickets, quantity, quality.quality]);
+
   const handleShowMoreTickets = () => {
     showMoreTickets(5);
   };
 
-  useEffect(() => {
-    if (quantity.length === 4) {
-      setFiltered(tickets);
-    } else {
-      if (quantity.includes('1 пересадка')) {
-        const oneStopTickets: ITicket[] = tickets.filter(
-          (el) =>
-            el.segments[0].stops.length === 1 ||
-            el.segments[1].stops.length === 1,
-        );
-        setFiltered([...oneStopTickets, ...filtered]);
-      }
-      if (quantity.includes('2 пересадки')) {
-        const secStopTickets = tickets.filter(
-          (el) =>
-            el.segments[0].stops.length === 2 ||
-            el.segments[1].stops.length === 2,
-        );
-        setFiltered([...secStopTickets, ...filtered]);
-      }
-      if (quantity.includes('3 пересадки')) {
-        const thirdStopTickets = tickets.filter(
-          (el) =>
-            el.segments[0].stops.length === 3 ||
-            el.segments[1].stops.length === 3,
-        );
-        setFiltered([...thirdStopTickets, ...filtered]);
-      }
-      if (quantity.includes('Без пересадок')) {
-        const zeroStopTickets = tickets.filter(
-          (el) =>
-            el.segments[0].stops.length === 0 ||
-            el.segments[1].stops.length === 0,
-        );
-        setFiltered([...zeroStopTickets, ...filtered]);
-      }
-    }
-    if (quantity.length === 0) {
-      setFiltered([]);
-    }
-  }, [tickets, quantity]);
-
-  /*   useEffect(() => {
-    if (quality.quality === "САМЫЙ ДЕШЕВЫЙ") {
-    setFiltered(filtered.sort((a,b) => a.price - b.price))
-    } 
-    if (quality.quality === "САМЫЙ БЫСТРЫЙ") {
-      setFiltered(filtered.sort((a,b) => a.segments[0].destination - b.segments[0].destination))
-    } 
-    if (quality.quality === "ОПТИМАЛЬНЫЙ") {
-      setFiltered(filtered.sort((a,b) => a.price - b.price))
-    } 
-     
-  }, [tickets, quality, filtered]); */
-
-  console.log(filtered);
-  /*   Еще один стейт фильтеред */
   return (
     <div className={styles['ticket-list']}>
       {isLoad && <img src={loadImage} />}
-      {filtered.length ? (
-        filtered
+      {filteredDataArray.length ? (
+        filteredDataArray
           .slice(0, totalPage + 5)
           .map((el: ITicket) => <Ticket {...el} key={nextId()} />)
       ) : (
@@ -96,9 +97,11 @@ const TicketsList: React.FC = () => {
       )}
       <button
         className={styles['ticket-list__pagination']}
-        style={filtered.length ? undefined : { display: 'none' }}
+        style={
+          filteredDataArray.length ? undefined : { display: 'none' }
+        }
         onClick={handleShowMoreTickets}
-        disabled={!filtered.length}
+        disabled={!filteredDataArray.length}
       >
         Показать еще 5 билетов!
       </button>

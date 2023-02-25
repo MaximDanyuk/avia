@@ -16,20 +16,20 @@
   }
 
   &__content-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 141px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
   &__content {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    gap: 95px;
   }
 
   &__item-list {
     display: flex;
     flex-direction: column;
-    gap: 3px;
   }
 
   &__text {
@@ -71,9 +71,8 @@
   .ticket {
     width: 350px;
 
-    &__content-wrapper {
-      display: grid;
-      grid-template-columns: repeat(3, 107px);
+    &__content {
+      gap: 35px;
     }
   }
 }
@@ -82,11 +81,6 @@
   .ticket {
     width: 300px;
 
-    &__content-wrapper {
-      display: grid;
-      grid-template-columns: repeat(3, 90px);
-    }
-
     &__text_light {
       font-size: 10px;
     }
@@ -94,6 +88,10 @@
     &__text_dark {
       font-size: 12px;
       line-height: 21px;
+    }
+
+    &__content {
+      gap: 28px;
     }
   }
 }
